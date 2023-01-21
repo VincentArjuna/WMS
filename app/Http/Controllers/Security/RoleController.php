@@ -15,18 +15,18 @@ class RoleController extends Controller
     public function index()
     {
         $roles = RoleResource::collection(Role::all());
-        return Inertia::render('Security/RoleManagement/Index', compact('roles'));
+        return Inertia::render('Security/Role/Index', compact('roles'));
     }
 
     public function create()
     {
-        return Inertia::render('Security/RoleManagement/Create');
+        return Inertia::render('Security/Role/Create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'string'
+            'name' => 'string|required'
         ]);
         Role::create(['name' => $request->name]);
         return redirect()->route('security.roles.index')->with('message', 'Role Created Successfully!');
