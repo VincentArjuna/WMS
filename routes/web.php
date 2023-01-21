@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Security\RoleController;
+use App\Http\Controllers\Security\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -39,10 +40,8 @@ Route::middleware('auth')->group(function () {
         'prefix' => 'security',
         'as' => 'security.'
     ], function () {
-        Route::resource(
-            '/roles',
-            RoleController::class
-        );
+        Route::resource('/roles', RoleController::class);
+        Route::resource('/users', UserController::class);
     });
 });
 

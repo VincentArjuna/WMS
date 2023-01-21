@@ -6,30 +6,32 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, useForm } from "@inertiajs/vue3";
 
-defineProps({
-    roles: Array
+const props = defineProps({
+    roles: Array,
+    user: Object
 });
 
 const form = useForm({
-    name: '',
-    email: null,
-    password: '',
-    role_name: '',
+    id: props.user.data?.id,
+    name: props.user.data?.name,
+    email: props.user.data?.email,
+    password: null,
+    role_name: props.user.data?.role_name,
 });
 
 const submit = () => {
-    form.post(route('security.users.store'));
+    form.patch(route('security.users.update', form.id))
 };
 </script>
 
 <template>
 
-    <Head title="New User" />
+    <Head title="Edit Project" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                New User
+                Edit Project
             </h2>
         </template>
 
@@ -51,7 +53,7 @@ const submit = () => {
                         <InputLabel for="name" value="Name" />
                         <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" autofocus
                             autocomplete="name" />
-                        <InputError class="mt-2" :message="form.errors.name" />
+                        <InputError class="mt-2" :message="$page.props.errors.name" />
                     </div>
 
                     <div class="mt-2">
@@ -69,9 +71,8 @@ const submit = () => {
                     </div>
 
                     <div class="flex items-center justify-end mt-4">
-                        <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }"
-                            :disabled="form.processing">
-                            Store
+                        <PrimaryButton class="ml-4">
+                            Update
                         </PrimaryButton>
                     </div>
                 </form>
