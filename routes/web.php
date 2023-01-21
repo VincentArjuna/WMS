@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Security\PermissionController;
 use App\Http\Controllers\Security\RoleController;
 use App\Http\Controllers\Security\UserController;
 use Illuminate\Foundation\Application;
@@ -42,6 +43,7 @@ Route::middleware('auth')->group(function () {
     ], function () {
         Route::resource('/roles', RoleController::class);
         Route::resource('/users', UserController::class);
+        Route::resource('/permissions', PermissionController::class);
     });
 });
 

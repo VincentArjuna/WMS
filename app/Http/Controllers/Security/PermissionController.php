@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Security;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\RoleResource;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Spatie\Permission\Models\Role;
 
 class PermissionController extends Controller
 {
@@ -14,7 +17,8 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
+        $roles = RoleResource::collection(Role::all());
+        return Inertia::render('Security/Permission/Index', compact('roles'));
     }
 
     /**
