@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Security;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PermissionsResource;
 use App\Http\Resources\RoleResource;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class PermissionController extends Controller
@@ -56,12 +58,15 @@ class PermissionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Role $role
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $role = Role::find($id);
+        $permissions = Permission::all()->pluck('name');
+        $rolePermissions = $role->permissions->pluck('name');
+        return Inertia::render('Security/Permission/Edit', compact('permissions', 'role', 'rolePermissions'));
     }
 
     /**
@@ -73,7 +78,9 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $role = Role::find($id);
+        $role->syncPermissions($request->permissions);
+        return redirect()->route('security.permissions.index')->with('message', 'Permission Updated Successfully!');
     }
 
     /**

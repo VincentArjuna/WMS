@@ -49,11 +49,8 @@ defineProps({
                                     {{ role.name }}
                                 </td>
                                 <td class="py-4 px-6">
-                                    <Link :href="route('security.roles.edit', role.id)"
+                                    <Link :href="route('security.permissions.edit', role.id)"
                                         class="font-medium text-blue-500 hover:text-blue-700 mr-2">Edit Permission
-                                    </Link>
-                                    <Link :href="route('security.roles.destroy', role.id)" method="delete" as="button"
-                                        type="button" class="font-medium text-red-500 hover:text-red-700 mr-2">Delete
                                     </Link>
                                 </td>
                             </tr>
