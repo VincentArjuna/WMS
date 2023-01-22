@@ -51,7 +51,8 @@ defineProps({
                                     {{ role.name }}
                                 </td>
                                 <td class="py-4 px-6">
-                                    <Link :href="route('security.permissions.edit', role.id)"
+                                    <Link v-if="userPermissions.includes('Edit Role Permissions')"
+                                        :href="route('security.permissions.edit', role.id)"
                                         class="font-medium text-blue-500 hover:text-blue-700 mr-2">Edit Permission
                                     </Link>
                                 </td>

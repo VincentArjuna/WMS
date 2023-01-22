@@ -24,7 +24,7 @@ defineProps({
                     role="alert">
                     <div class="max-w-7xl mx-auto"> {{ $page.props.flash.message }}</div>
                 </div>
-                <div class="flex justify-end m-2 p-2">
+                <div v-if="userPermissions.includes('Create New Role')" class="flex justify-end m-2 p-2">
                     <Link :href="route('security.roles.create')"
                         class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 text-white rounded-md">
                     New Role
@@ -56,11 +56,9 @@ defineProps({
                                     {{ role.name }}
                                 </td>
                                 <td class="py-4 px-6">
-                                    <Link :href="route('security.roles.edit', role.id)"
+                                    <Link v-if="userPermissions.includes('Edit Role Info')"
+                                        :href="route('security.roles.edit', role.id)"
                                         class="font-medium text-blue-500 hover:text-blue-700 mr-2">Edit</Link>
-                                    <Link :href="route('security.roles.destroy', role.id)" method="delete" as="button"
-                                        type="button" class="font-medium text-red-500 hover:text-red-700 mr-2">Delete
-                                    </Link>
                                 </td>
                             </tr>
 
