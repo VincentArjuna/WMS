@@ -8,6 +8,11 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
+
+defineProps({
+    userPermissions: Object
+});
+
 </script>
 
 <template>
@@ -30,15 +35,18 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('security.users.index')"
+                                <NavLink v-if="userPermissions.includes('View User Menu')"
+                                    :href="route('security.users.index')"
                                     :active="route().current('security.users.index')">
                                     User
                                 </NavLink>
-                                <NavLink :href="route('security.roles.index')"
+                                <NavLink v-if="userPermissions.includes('View Role Menu')"
+                                    :href="route('security.roles.index')"
                                     :active="route().current('security.roles.index')">
                                     Role
                                 </NavLink>
-                                <NavLink :href="route('security.permissions.index')"
+                                <NavLink v-if="userPermissions.includes('View Permission Menu')"
+                                    :href="route('security.permissions.index')"
                                     :active="route().current('security.permissions.index')">
                                     Permission
                                 </NavLink>

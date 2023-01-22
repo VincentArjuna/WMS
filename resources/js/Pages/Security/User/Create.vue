@@ -7,7 +7,8 @@ import TextInput from '@/Components/TextInput.vue';
 import { Head, useForm } from "@inertiajs/vue3";
 
 defineProps({
-    roles: Array
+    roles: Array,
+    userPermissions: Object
 });
 
 const form = useForm({
@@ -26,7 +27,7 @@ const submit = () => {
 
     <Head title="New User" />
 
-    <AuthenticatedLayout>
+    <AuthenticatedLayout :userPermissions="userPermissions">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 New User

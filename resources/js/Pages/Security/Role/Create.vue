@@ -10,6 +10,10 @@ const form = useForm({
     name: '',
 });
 
+defineProps({
+    userPermissions: Object
+});
+
 const submit = () => {
     form.post(route('security.roles.store'));
 };
@@ -19,7 +23,7 @@ const submit = () => {
 
     <Head title="New Role" />
 
-    <AuthenticatedLayout>
+    <AuthenticatedLayout :userPermissions="userPermissions">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 New Role

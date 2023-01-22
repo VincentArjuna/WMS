@@ -7,6 +7,7 @@ const props = defineProps({
     role: Object,
     permissions: Object,
     rolePermissions: Object,
+    userPermissions: Object,
 });
 
 const form = useForm({
@@ -23,7 +24,7 @@ const submit = () => {
 
     <Head title="Permission" />
 
-    <AuthenticatedLayout>
+    <AuthenticatedLayout :userPermissions="props.userPermissions">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ role.name }} Permission</h2>
         </template>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Security;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Http\Traits\PermissionTrait;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -13,6 +14,8 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    use PermissionTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +24,8 @@ class UserController extends Controller
     public function index()
     {
         $users = UserResource::collection(User::all());
-        return Inertia::render('Security/User/Index', compact('users'));
+        $userPermissions = PermissionTrait::userPermission();
+        return Inertia::render('Security/User/Index', compact('users', 'userPermissions'));
     }
 
     /**
@@ -32,7 +36,9 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return Inertia::render('Security/User/Create', compact('roles'));
+        $userPermissions = PermissionTrait::userPermission();
+
+        return Inertia::render('Security/User/Create', compact('roles', 'userPermissions'));
     }
 
     /**
@@ -79,7 +85,9 @@ class UserController extends Controller
     {
         $roles = Role::all();
         $user = UserResource::make($user);
-        return Inertia::render('Security/User/Edit', compact('user', 'roles'));
+        $userPermissions = PermissionTrait::userPermission();
+
+        return Inertia::render('Security/User/Edit', compact('user', 'roles', 'userPermissions'));
     }
 
     /**

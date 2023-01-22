@@ -8,7 +8,8 @@ import { Head, useForm } from "@inertiajs/vue3";
 
 
 const props = defineProps({
-    role: Object
+    role: Object,
+    userPermissions: Object
 });
 
 const form = useForm({
@@ -26,7 +27,7 @@ const submit = () => {
 
     <Head title="Edit Role" />
 
-    <AuthenticatedLayout>
+    <AuthenticatedLayout :userPermissions="props.userPermissions">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Edit Role

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Security;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PermissionsResource;
 use App\Http\Resources\RoleResource;
+use App\Http\Traits\PermissionTrait;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
@@ -12,6 +13,9 @@ use Spatie\Permission\Models\Role;
 
 class PermissionController extends Controller
 {
+
+    use PermissionTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +24,8 @@ class PermissionController extends Controller
     public function index()
     {
         $roles = RoleResource::collection(Role::all());
-        return Inertia::render('Security/Permission/Index', compact('roles'));
+        $userPermissions = PermissionTrait::userPermission();
+        return Inertia::render('Security/Permission/Index', compact('roles', 'userPermissions'));
     }
 
     /**
@@ -66,7 +71,8 @@ class PermissionController extends Controller
         $role = Role::find($id);
         $permissions = Permission::all()->pluck('name');
         $rolePermissions = $role->permissions->pluck('name');
-        return Inertia::render('Security/Permission/Edit', compact('permissions', 'role', 'rolePermissions'));
+        $userPermissions = PermissionTrait::userPermission();
+        return Inertia::render('Security/Permission/Edit', compact('permissions', 'role', 'rolePermissions', 'userPermissions'));
     }
 
     /**

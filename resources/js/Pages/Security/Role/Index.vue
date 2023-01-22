@@ -3,7 +3,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 
 defineProps({
-    roles: Object
+    roles: Object,
+    userPermissions: Object
 });
 </script>
 
@@ -11,7 +12,7 @@ defineProps({
 
     <Head title="Role" />
 
-    <AuthenticatedLayout>
+    <AuthenticatedLayout :userPermissions="userPermissions">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Role</h2>
         </template>
