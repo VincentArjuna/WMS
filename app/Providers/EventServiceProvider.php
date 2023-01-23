@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
+use App\Observers\UserActionObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,7 +30,8 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Role::observe(UserActionObserver::class);
+        Permission::observe(UserActionObserver::class);
     }
 
     /**

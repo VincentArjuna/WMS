@@ -50,6 +50,10 @@ defineProps({
                                     :active="route().current('security.permissions.index')">
                                     Permission
                                 </NavLink>
+                                <NavLink :href="route('history.useraction')"
+                                    :active="route().current('history.useraction')">
+                                    User Action
+                                </NavLink>
                             </div>
                         </div>
 
