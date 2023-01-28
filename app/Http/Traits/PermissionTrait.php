@@ -2,13 +2,14 @@
 
 namespace App\Http\Traits;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 trait PermissionTrait
 {
     public static function userPermission()
     {
-        $user = Auth::user();
+        $user = User::find(Auth::id());
         $permissions = $user->getPermissionsViaRoles()->pluck('name');
         return $permissions;
     }

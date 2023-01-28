@@ -1,5 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import SideBar from '@/Layouts/SideBar.vue';
 import { Head } from '@inertiajs/vue3';
 
 defineProps({
@@ -11,7 +12,7 @@ defineProps({
 <template>
 
     <Head title="Dashboard" />
-
+    <SideBar />
     <AuthenticatedLayout :userPermissions="userPermissions">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>

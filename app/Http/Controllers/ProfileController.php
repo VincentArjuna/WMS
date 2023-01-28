@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Traits\PermissionTrait;
+use App\Http\Traits\UploadTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,14 +15,18 @@ use Inertia\Response;
 
 class ProfileController extends Controller
 {
+    use UploadTrait, PermissionTrait;
+
     /**
      * Display the user's profile form.
      */
     public function edit(Request $request): Response
     {
+        $userPermissions = PermissionTrait::userPermission();
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
+            'userPermissions' => $userPermissions,
         ]);
     }
 
@@ -36,6 +42,17 @@ class ProfileController extends Controller
         }
 
         $request->user()->save();
+
+        return Redirect::route('profile.edit');
+    }
+
+    public function updateAvatar(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'avatar' => 'required|image|max:1024'
+        ]);
+
+        UploadTrait::uploadImage($request->file('avatar'), 'avatar');
 
         return Redirect::route('profile.edit');
     }
